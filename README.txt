@@ -1,0 +1,1 @@
+Chinese Segmentor by HMM
