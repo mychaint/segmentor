@@ -2,6 +2,12 @@ package Segmentation;
 
 import java.io.*;
 
+/**
+ * 
+ * @author gong.chen
+ * This is a traditional Stem tokenizer for English
+ *
+ */
 class Stemmer
 {  private char[] b;
    private int i,     /* offset into b */

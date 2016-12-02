@@ -5,6 +5,12 @@ import java.util.*;
 
 import javax.lang.model.element.VariableElement;
 
+/**
+ * 
+ * @author gong.chen
+ * First Order HMM tokenizer, contains training methods
+ *
+ */
 public class CGSegmenter {
 
 	private String TrainingMaterialPath;

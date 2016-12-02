@@ -7,28 +7,22 @@ public class Program {
 
 	public static void main(String[] args) {
 		CGSegmenter seg = new CGSegmenter(false);
-		
+
 		try {
-			seg.statisticSumOfCharacters();
-		} catch (Exception e) {
-			e.printStackTrace();
+			InputStream r = System.in;
+			InputStreamReader re = new InputStreamReader(r);
+			BufferedReader reader = new BufferedReader(re);
+			String content = reader.readLine();
+			System.out.println("---------------");
+			List<String> list = seg.segmentSentence(content.toCharArray());
+			for(String i : list){
+				System.out.println(i);
+			}
+			System.out.println("---------------");
+			
+		} catch (IOException e) {
+			
 		}
-//		System.out.println("��ע����ʼ����ɡ��������ַ�");
-//		try {
-//			InputStream r = System.in;
-//			InputStreamReader re = new InputStreamReader(r);
-//			BufferedReader reader = new BufferedReader(re);
-//			String content = reader.readLine();
-//			System.out.println("---------------");
-//			List<String> list = seg.segmentSentence(content.toCharArray());
-//			for(String i : list){
-//				System.out.println(i);
-//			}
-//			System.out.println("---------------");
-//			
-//		} catch (IOException e) {
-//			
-//		}
 		
 //		Stemmer stem = new Stemmer();
 //		String string = "created";
