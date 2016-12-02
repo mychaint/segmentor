@@ -1,4 +1,4 @@
-<blockquote>
+
 <p>This segmenter is based on First-Order Hidden Markov Random Field and I used 4-tag model to process the observation
  sequence. I would like to briefly introduce the principal I adopted in this segmenter.
 </p>
@@ -39,7 +39,6 @@ current one should have, which we call Bigram Model. Afterward, program will out
 <img src="http://august-charter-92912.appspot.com/Resources/image/segNETin.jpg"/><br/>
 This is the segmentation result<br/>
 <img src="http://august-charter-92912.appspot.com/Resources/image/segNETres.jpg"/></p>
-</blockquote>
 <hr>
 <p>References</p>
 <p>Huang Chang-ning Zhao Hai. Chinese Word Segmentation: A Decade Review. Journal of Chinese Information Processing, May 2007 : 8-19 </p>
