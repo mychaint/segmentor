@@ -1,4 +1,9 @@
-
+<b>File List</b>
+<p>src/ : java source code.</p>
+<p>tf/ : text files used to initialised tokenizer.
+<p>tm/ : training materials, corpus from Microsoft Research Asia.
+<hr>
+<b>Introduction of Principle</b>
 <p>This segmenter is based on First-Order Hidden Markov Random Field and I used 4-tag model to process the observation
  sequence. I would like to briefly introduce the principal I adopted in this segmenter.
 </p>
