@@ -32,8 +32,6 @@ current one should have, which we call Bigram Model. Afterward, program will out
  issue. I optimised this algorithm in serval aspects, such as ignore the irrational tag combinations like B-S, M-S, E-M, M-B, and
  provide a default probability for strange character combinations(cannot find in corpus, such as non-vocabularies, person name, 
  place name etc.).</p>
-<p>Unfortunately, I have not measured its percision, recall and F-Measure, after all, this is a beta version and practice of
- what I learnt. Hopefully, it will be a advantage of me in future work.</p>
 <b>Sample</b>
 <p>This is the input content.<br/>
 <img src="http://august-charter-92912.appspot.com/Resources/image/segNETin.jpg"/><br/>
@@ -41,5 +39,6 @@ This is the segmentation result<br/>
 <img src="http://august-charter-92912.appspot.com/Resources/image/segNETres.jpg"/></p>
 <hr>
 <p>References</p>
-<p>Huang Chang-ning Zhao Hai. Chinese Word Segmentation: A Decade Review. Journal of Chinese Information Processing, May 2007 : 8-19 </p>
+<p>Huang Chang-ning, Zhao Hai. Chinese Word Segmentation: A Decade Review. Journal of Chinese Information Processing, May 2007 : 8-19 </p>
+<p>L.R.Rabiner, B.H.Juang. An Introduction to Hidden Markov Models. IEEE ASSP Magazine, Jan 1986 : 4-16 </p>
 </div>
