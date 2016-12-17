@@ -51,4 +51,4 @@ This is the segmentation result
 ### Another Version
 I coded a segmentor with C# language, please refer to my repo: [segmentor-c#]
 
-[segmentor-c#]:<https://github.com/mychaint/segmentor>
+[segmentor-c#]:<https://github.com/mychaint/segmentor-c->
