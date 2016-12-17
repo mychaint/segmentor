@@ -47,3 +47,8 @@ This is the segmentation result
 * src/ : java source code.
 * tf/ : text files used to initialised tokenizer.
 * tm/ : training materials, corpus from Microsoft Research Asia.
+
+### Another Version
+I coded a segmentor with C# language, please refer to my repo: [segmentor-c#]
+
+[segmentor-c#]:<https://github.com/mychaint/segmentor>
