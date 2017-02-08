@@ -1,7 +1,7 @@
 # Chinese Segmentor (Tokenizer)
-Since word is the minimium unit to express meaning in various and complicated sentences, when conduct natural language processing in different language, extracting words in a sentence is always a essential task at beginning. Unlikely to English, in which words are splitted by spaces, Chinese has no interval between each two words. Because of it, Chinese segementor needs to identify correct combinations of consequential characters. 
+Since word is the minimium unit to express meaning in various and complicated sentences. When conduct natural language processing in different languages, extracting words in a sentence is always an essential task at beginning. Unlike English, in which words are naturally splitted by spaces, Chinese has no interval between each two characters, so that Chinese segementor needs to identify correct combinations of consecutive characters. 
 
-The challenges are ambiguity and non-volcabulary.
+There are two challenges, ambiguity and non-volcabulary.
 For ambiguity, the common case in Chinese is no matter you split or combine consequential characters, they are both make senses individually, but segmentor should only select one which is globally understandable. Such as "组合成分子", the correct result should be 组合/成/分子, however 组合,合成,成分,分子, they are all valid words in Chinese. Also like in two sentences "熟悉他的人才能够了解他的想法" and "公司在寻找人才加入我们的团队", "人才" needs to be considered differently, the first one must be "人/才" while the second one is "人才".
 For non-volcabulary, such places' names like "黄山", "钓鱼台", "新加坡", human's names like "比尔盖茨", "周星驰", terminologies like "中国人民解放军", "中科院上海技术物理研究院", "电商" they need to be detected as a single word. However not all of them ever appeared in a dictionary, even anywhere for a new word.
 
