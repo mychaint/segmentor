@@ -5,23 +5,34 @@ import java.util.*;
 
 public class Program {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		
 		CGSegmenter seg = new CGSegmenter(false);
+		InputStreamReader re = null;
+		
+		if (args.length > 0) {
+			String filePath = args[0];
+			File file = new File(filePath);
+			if(!file.exists()){
+				System.err.println("File not exists.");
+			} else {
+				FileInputStream fis = new FileInputStream(file);
+				re = new InputStreamReader(fis);
 
-		try {
-			InputStream r = System.in;
-			InputStreamReader re = new InputStreamReader(r);
-			BufferedReader reader = new BufferedReader(re);
-			String content = reader.readLine();
-			System.out.println("---------------");
-			List<String> list = seg.segmentSentence(content.toCharArray());
-			for(String i : list){
-				System.out.println(i);
 			}
-			System.out.println("---------------");
 			
-		} catch (IOException e) {
+		} else {
+			InputStream r = System.in;
+			re = new InputStreamReader(r);
 			
+		}
+		
+		BufferedReader reader = new BufferedReader(re);
+		String content = reader.readLine();
+		System.out.println("Result:");
+		List<String> list = seg.segmentSentence(content.toCharArray());
+		for(String i : list){
+			System.out.println(i);
 		}
 		
 //		Stemmer stem = new Stemmer();

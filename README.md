@@ -48,3 +48,6 @@ This is the segmentation result
 * tf/ : text files used to initialised tokenizer.
 * tm/ : training materials, corpus from Microsoft Research Asia.
 
+### Execute Program
+* java Segmentation.Program : Then key in text in command line.
+* java Segmentation.Program <file path> : specify a text file.
