@@ -49,7 +49,11 @@ This is the segmentation result
 * tm/ : training materials, corpus from Microsoft Research Asia.
 
 ### Execute Program
-##### Type content in command line
-``` java Segmentation.Program ```
-##### Specify text file path
-``` java Segmentation.Program <file path>```
+Type content in command line
+```sh
+$ java Segmentation.Program 
+```
+Specify text file path
+```sh
+$ java Segmentation.Program <file path>
+```
