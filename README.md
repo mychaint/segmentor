@@ -51,9 +51,9 @@ This is the segmentation result
 ### Execute Program
 Type content in command line
 ```sh
-$ java Segmentation.Program 
+$ java com.mychaint.nlp.Program 
 ```
 Specify text file path
 ```sh
-$ java Segmentation.Program <file path>
+$ java com.mychaint.nlp.Program <file path>
 ```
