@@ -3,8 +3,6 @@ package com.mychaint.nlp;
 import java.io.*;
 
 /**
- * 
- * @author gong.chen
  * This is a traditional Stem tokenizer for English
  *
  */
