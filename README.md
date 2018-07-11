@@ -55,9 +55,9 @@ $ mvn clean install
 ```
 Execute this program
 ```sh
-$ java -jar tokenizer-1.0-SNAPSHOT.jar
+$ java -jar target/tokenizer-1.0-SNAPSHOT.jar
 ```
 Specify text file as input
 ```sh
-$ java -jar tokenizer-1.0-SNAPSHOT.jar <file path>
+$ java -jar target/tokenizer-1.0-SNAPSHOT.jar <file path>
 ```

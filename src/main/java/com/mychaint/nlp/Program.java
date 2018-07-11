@@ -27,6 +27,7 @@ public class Program {
 
 		}
 
+		System.out.println("Type Chinese here:");
 		BufferedReader reader = new BufferedReader(re);
 		String content = reader.readLine();
 		System.out.println("Result:");
