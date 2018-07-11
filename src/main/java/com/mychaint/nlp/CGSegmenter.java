@@ -61,116 +61,102 @@ public class CGSegmenter {
 	}
 
 	public void statisticSumOfCharacters() throws Exception {
-		File f = new File(this.getClass().getClassLoader().getResource(this.TrainingMaterialPath).getFile());
-		if (!f.exists()) {
-			System.err.println("未找到中文语料库文件： " + this.TrainingMaterialPath);
-		} else {
-			HashMap<Character, Integer> hashMap = new HashMap<>();
-			char[] charArray = null;
-			try {
-				FileInputStream fis = new FileInputStream(f);
-				InputStreamReader re = new InputStreamReader(fis,
-						this.DefaultFileFormat);
-				BufferedReader reader = new BufferedReader(re);
-				String string = null;
-				while ((string = reader.readLine()) != null) {
-					charArray = string.toCharArray();
-					for (char i : charArray) {
-						if (i > 0x3400 && i < 0x9F00) {
-							if (!hashMap.containsKey(i)) {
-								hashMap.put(i, 0);
-							}
-						}
-					}
-				}
-				File file = new File(this.getClass().getClassLoader().getResource(this.StatisticSumOfCharactersPath).getFile());
-				if (!file.exists()) {
-					System.err.println("为找到存储文件："
-							+ this.StatisticSumOfCharactersPath);
-				}
-				FileOutputStream out = new FileOutputStream(file);
-				OutputStreamWriter writer = new OutputStreamWriter(out,
-						this.DefaultFileFormat);
-				writer.write(new String("Total : " + hashMap.keySet().size() + "\r\n"));
-				int n = 0;
-				for (char i : hashMap.keySet()) {
-					writer.write(i);
-					n++;
-					if (n % 50 == 0)
-						writer.write("\r\n");
-				}
-				writer.flush();
-				writer.close();
-				System.out.println("文字统计完成。");
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+        HashMap<Character, Integer> hashMap = new HashMap<>();
+        char[] charArray = null;
+        try {
+            InputStream in = this.getClass().getClassLoader().getResourceAsStream(this.TrainingMaterialPath);
+            InputStreamReader re = new InputStreamReader(in,
+                    this.DefaultFileFormat);
+            BufferedReader reader = new BufferedReader(re);
+            String string = null;
+            while ((string = reader.readLine()) != null) {
+                charArray = string.toCharArray();
+                for (char i : charArray) {
+                    if (i > 0x3400 && i < 0x9F00) {
+                        if (!hashMap.containsKey(i)) {
+                            hashMap.put(i, 0);
+                        }
+                    }
+                }
+            }
+            File file = new File(this.getClass().getClassLoader().getResource(this.StatisticSumOfCharactersPath).getFile());
+            if (!file.exists()) {
+                System.err.println("为找到存储文件："
+                        + this.StatisticSumOfCharactersPath);
+            }
+            FileOutputStream out = new FileOutputStream(file);
+            OutputStreamWriter writer = new OutputStreamWriter(out,
+                    this.DefaultFileFormat);
+            writer.write(new String("Total : " + hashMap.keySet().size() + "\r\n"));
+            int n = 0;
+            for (char i : hashMap.keySet()) {
+                writer.write(i);
+                n++;
+                if (n % 50 == 0)
+                    writer.write("\r\n");
+            }
+            writer.flush();
+            writer.close();
+            System.out.println("文字统计完成。");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
 	// 预处理中文语料库
 	protected void processTrainingMaterial() {
-		File f = new File(this.getClass().getClassLoader().getResource(this.TrainingMaterialPath).getFile());
-		if (!f.exists()) {
-			System.err.println("未找到中文语料库文件： " + this.TrainingMaterialPath);
-		} else {
-			try {
-				if (!f.exists()) {
-					f.createNewFile();
-				}
-				FileInputStream fis = new FileInputStream(f);
-				InputStreamReader re = new InputStreamReader(fis,
-						this.DefaultFileFormat);
-				BufferedReader reader = new BufferedReader(re);
-				String temp;
-				PrintWriter writer = new PrintWriter(
-						this.TaggedTrainingMaterialPath, this.DefaultFileFormat);
-				System.out.println(new Date().toString() + " 开始预处理中文语料库。");
-				while ((temp = reader.readLine()) != null) {
-					char[] chararr = temp.toCharArray();
-					StringBuilder sb = new StringBuilder();
-					int i = 0;
-					if (chararr[i] == 65279)
-						i = 1;
-					int j = i;
-					while (j <= chararr.length - 1) {
-						while (j < chararr.length - 1 && chararr[j] == ' ')
-							j++;
-						i = j;
-						while (j < chararr.length - 1 && chararr[j] != 32)
-							j++;
-						if (j - i == 1) {
-							sb.append(chararr[i] + "S");
-						} else if (j - i == 2) {
-							sb.append(chararr[i] + "B");
-							sb.append(chararr[j - 1] + "E");
-						} else if (j - i > 2) {
-							sb.append(chararr[i++] + "B");
-							while (i != j - 1) {
-								sb.append(chararr[i++] + "M");
-							}
-							sb.append(chararr[i] + "E");
-						}
-						if (j >= chararr.length - 1)
-							break;
-					}
-					writer.println(sb.toString());
-				}
-				System.out.println(new Date().toString() + " 完成中文语料库预处理。");
-				writer.close();
-				fis.close();
-				re.close();
-				reader.close();
-			} catch (IOException e) {
-				System.err
-						.println("Error in method processTrainingMaterial() : "
-								+ e.getMessage());
-			}
-		}
+        try {
+            InputStream in = this.getClass().getClassLoader().getResourceAsStream(this.TrainingMaterialPath);
+            InputStreamReader re = new InputStreamReader(in,
+                    this.DefaultFileFormat);
+            BufferedReader reader = new BufferedReader(re);
+            String temp;
+            PrintWriter writer = new PrintWriter(
+                    this.TaggedTrainingMaterialPath, this.DefaultFileFormat);
+            System.out.println(new Date().toString() + " 开始预处理中文语料库。");
+            while ((temp = reader.readLine()) != null) {
+                char[] chararr = temp.toCharArray();
+                StringBuilder sb = new StringBuilder();
+                int i = 0;
+                if (chararr[i] == 65279)
+                    i = 1;
+                int j = i;
+                while (j <= chararr.length - 1) {
+                    while (j < chararr.length - 1 && chararr[j] == ' ')
+                        j++;
+                    i = j;
+                    while (j < chararr.length - 1 && chararr[j] != 32)
+                        j++;
+                    if (j - i == 1) {
+                        sb.append(chararr[i] + "S");
+                    } else if (j - i == 2) {
+                        sb.append(chararr[i] + "B");
+                        sb.append(chararr[j - 1] + "E");
+                    } else if (j - i > 2) {
+                        sb.append(chararr[i++] + "B");
+                        while (i != j - 1) {
+                            sb.append(chararr[i++] + "M");
+                        }
+                        sb.append(chararr[i] + "E");
+                    }
+                    if (j >= chararr.length - 1)
+                        break;
+                }
+                writer.println(sb.toString());
+            }
+            System.out.println(new Date().toString() + " 完成中文语料库预处理。");
+            writer.close();
+            re.close();
+            reader.close();
+        } catch (IOException e) {
+            System.err
+                    .println("Error in method processTrainingMaterial() : "
+                            + e.getMessage());
+        }
 	}
 
 	// 统计学习
@@ -181,194 +167,169 @@ public class CGSegmenter {
 
 	// 学习状态独立概率
 	protected void learningSingleTag() {
-		File f = new File(this.getClass().getClassLoader().getResource(this.TaggedTrainingMaterialPath).getFile());
-		if (!f.exists()) {
-			System.err.println("未找到训练语料文件" + this.TaggedTrainingMaterialPath);
-		} else {
-			try {
-				this._charHash = new HashMap<>();
+        try {
+            this._charHash = new HashMap<>();
 
-				// 学习独立概率
-				Double total = 0.0;
-				FileInputStream fis = new FileInputStream(f);
-				InputStreamReader re = new InputStreamReader(fis,
-						this.DefaultFileFormat);
-				BufferedReader reader = new BufferedReader(re);
-				String temp = null;
-				System.out.println(new Date().toString() + " 开始学习独立概率。");
-				while ((temp = reader.readLine()) != null) {
-					char[] chararr = temp.toCharArray();
-					if (chararr.length == 0)
-						continue;
-					int i = 0;
-					if ((int) chararr[i] == 65279)
-						i++;
-					while (i < chararr.length) {
-						StringBuilder charsb = new StringBuilder();
-						charsb.append(chararr[i]);
-						charsb.append(chararr[i + 1]);
-						if (this._charHash.containsKey(charsb.toString())) {
-							Double _t = this._charHash.get(charsb.toString());
-							_t = _t + 1.0;
-							this._charHash.put(charsb.toString(), _t);
-						} else
-							this._charHash.put(charsb.toString(), 1.0);
-						total += 1.0;
-						i += 2;
-					}
-				}
+            // 学习独立概率
+            Double total = 0.0;
+            InputStream in = this.getClass().getClassLoader().getResourceAsStream(this.TaggedTrainingMaterialPath);
+            InputStreamReader re = new InputStreamReader(in,
+                    this.DefaultFileFormat);
+            BufferedReader reader = new BufferedReader(re);
+            String temp = null;
+            System.out.println(new Date().toString() + " 开始学习独立概率。");
+            while ((temp = reader.readLine()) != null) {
+                char[] chararr = temp.toCharArray();
+                if (chararr.length == 0)
+                    continue;
+                int i = 0;
+                if ((int) chararr[i] == 65279)
+                    i++;
+                while (i < chararr.length) {
+                    StringBuilder charsb = new StringBuilder();
+                    charsb.append(chararr[i]);
+                    charsb.append(chararr[i + 1]);
+                    if (this._charHash.containsKey(charsb.toString())) {
+                        Double _t = this._charHash.get(charsb.toString());
+                        _t = _t + 1.0;
+                        this._charHash.put(charsb.toString(), _t);
+                    } else
+                        this._charHash.put(charsb.toString(), 1.0);
+                    total += 1.0;
+                    i += 2;
+                }
+            }
 
-				File _f = new File(this.getClass().getClassLoader().getResource(this.FinalTagFilePathForSingle).getFile());
-				if (!_f.exists())
-					_f.createNewFile();
-				PrintWriter writer_char = new PrintWriter(
-						this.FinalTagFilePathForSingle, this.DefaultFileFormat);
+            File _f = new File(this.getClass().getClassLoader().getResource(this.FinalTagFilePathForSingle).getFile());
+            if (!_f.exists())
+                _f.createNewFile();
+            PrintWriter writer_char = new PrintWriter(
+                    this.FinalTagFilePathForSingle, this.DefaultFileFormat);
 
-				for (String key : this._charHash.keySet()) {
-					writer_char.print(key);
-					writer_char.println(this._charHash.get(key) / total);
-				}
-				System.out.println(new Date().toString() + " 完成独立概率学习。");
-				writer_char.close();
-				fis.close();
-				re.close();
-				reader.close();
-			} catch (IOException e) {
-				System.err.println("Error in method learningSingleTag()");
-			}
-		}
+            for (String key : this._charHash.keySet()) {
+                writer_char.print(key);
+                writer_char.println(this._charHash.get(key) / total);
+            }
+            System.out.println(new Date().toString() + " 完成独立概率学习。");
+            writer_char.close();
+            re.close();
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error in method learningSingleTag()");
+        }
 	}
 
 	// 学习状态转移概率
 	protected void learningRelationTag() {
-		File f = new File(this.getClass().getClassLoader().getResource(this.TaggedTrainingMaterialPath).getFile());
-		if (!f.exists()) {
-			System.err.println("未找到训练语料库" + this.TaggedTrainingMaterialPath);
-		} else {
-			try {
-				// HMM学习
-				this._thash = new THash();
-				FileInputStream fis = new FileInputStream(f);
-				InputStreamReader re = new InputStreamReader(fis,
-						this.DefaultFileFormat);
-				BufferedReader reader = new BufferedReader(re);
-				String temp = null;
-				System.out.println(new Date().toString() + " 开始学习状态转移概率。");
-				while ((temp = reader.readLine()) != null) {
-					char[] chararr = temp.toCharArray();
-					int i = 0;
-					while (i < chararr.length) {
-						if (i == 0)
-							this._thash.PutValue('~', '~', chararr[i],
-									chararr[i + 1]);
-						else
-							this._thash.PutValue(chararr[i - 2],
-									chararr[i - 1], chararr[i], chararr[i + 1]);
-						i += 2;
-					}
-				}
-				fis.close();
-				re.close();
-				reader.close();
-				this._thash.calculatePossibilityForAllCombinations(
-						this.FinalTagFilePathForRelation,
-						this.DefaultFileFormat);
-				System.out.println(new Date().toString() + " 完成状态转移概率学习。");
-				System.out.println(new Date().toString() + " 训练语料库学习完毕。");
-			} catch (IOException e) {
-				System.err.println("Error in method learningRelationTag()");
-			}
-		}
+        try {
+            // HMM学习
+            this._thash = new THash();
+            InputStream in = this.getClass().getClassLoader().getResourceAsStream(this.TaggedTrainingMaterialPath);
+            InputStreamReader re = new InputStreamReader(in,
+                    this.DefaultFileFormat);
+            BufferedReader reader = new BufferedReader(re);
+            String temp = null;
+            System.out.println(new Date().toString() + " 开始学习状态转移概率。");
+            while ((temp = reader.readLine()) != null) {
+                char[] chararr = temp.toCharArray();
+                int i = 0;
+                while (i < chararr.length) {
+                    if (i == 0)
+                        this._thash.PutValue('~', '~', chararr[i],
+                                chararr[i + 1]);
+                    else
+                        this._thash.PutValue(chararr[i - 2],
+                                chararr[i - 1], chararr[i], chararr[i + 1]);
+                    i += 2;
+                }
+            }
+            re.close();
+            reader.close();
+            this._thash.calculatePossibilityForAllCombinations(
+                    this.FinalTagFilePathForRelation,
+                    this.DefaultFileFormat);
+            System.out.println(new Date().toString() + " 完成状态转移概率学习。");
+            System.out.println(new Date().toString() + " 训练语料库学习完毕。");
+        } catch (IOException e) {
+            System.err.println("Error in method learningRelationTag()");
+        }
 	}
 
 	// 初始化标注器表
 	protected void initialiseTagHashMap() {
-		File f = new File(this.getClass().getClassLoader().getResource(this.FinalTagFilePathForRelation).getFile());
-		if (!f.exists()) {
-			System.out
-					.println("未找到标注器初始化文件" + this.FinalTagFilePathForRelation);
-		} else {
-			try {
-				this._tagHashForRelation = new HashMap<>();
-				FileInputStream fis = new FileInputStream(f);
-				InputStreamReader re = new InputStreamReader(fis,
-						this.DefaultFileFormat);
-				BufferedReader reader = new BufferedReader(re);
-				String temp = null;
-				while ((temp = reader.readLine()) != null) {
-					char[] chararr = temp.toCharArray();
-					StringBuilder pri_key_sb = new StringBuilder();
-					StringBuilder sec_key_sb = new StringBuilder();
-					pri_key_sb.append(chararr[0]);
-					pri_key_sb.append(chararr[1]);
-					sec_key_sb.append(chararr[2]);
-					sec_key_sb.append(chararr[3]);
-					int j = 6;
-					char[] pos_chararr = new char[7];
-					for (int n = 0; n < 7; n++, j++) {
-						pos_chararr[n] = chararr[j];
-					}
-					Double pos = 0.1 * this.convertStringtoDouble(pos_chararr,
-							0);
-					HashMap<String, Double> _hash;
-					if (this._tagHashForRelation.containsKey(pri_key_sb
-							.toString())) {
-						_hash = this._tagHashForRelation.get(pri_key_sb
-								.toString());
-						_hash.put(sec_key_sb.toString(), pos);
-					} else {
-						_hash = new HashMap<>();
-						_hash.put(sec_key_sb.toString(), pos);
-						this._tagHashForRelation.put(pri_key_sb.toString(),
-								_hash);
-					}
-				}
-				fis.close();
-				re.close();
-				reader.close();
-			} catch (IOException e) {
-				System.out.println("Error in method initialise -> relation");
-			}
-		}
+        try {
+            this._tagHashForRelation = new HashMap<>();
+            InputStream in = this.getClass().getClassLoader().getResourceAsStream(this.FinalTagFilePathForRelation);
+            InputStreamReader re = new InputStreamReader(in,
+                    this.DefaultFileFormat);
+            BufferedReader reader = new BufferedReader(re);
+            String temp = null;
+            while ((temp = reader.readLine()) != null) {
+                char[] chararr = temp.toCharArray();
+                StringBuilder pri_key_sb = new StringBuilder();
+                StringBuilder sec_key_sb = new StringBuilder();
+                pri_key_sb.append(chararr[0]);
+                pri_key_sb.append(chararr[1]);
+                sec_key_sb.append(chararr[2]);
+                sec_key_sb.append(chararr[3]);
+                int j = 6;
+                char[] pos_chararr = new char[7];
+                for (int n = 0; n < 7; n++, j++) {
+                    pos_chararr[n] = chararr[j];
+                }
+                Double pos = 0.1 * this.convertStringtoDouble(pos_chararr,
+                        0);
+                HashMap<String, Double> _hash;
+                if (this._tagHashForRelation.containsKey(pri_key_sb
+                        .toString())) {
+                    _hash = this._tagHashForRelation.get(pri_key_sb
+                            .toString());
+                    _hash.put(sec_key_sb.toString(), pos);
+                } else {
+                    _hash = new HashMap<>();
+                    _hash.put(sec_key_sb.toString(), pos);
+                    this._tagHashForRelation.put(pri_key_sb.toString(),
+                            _hash);
+                }
+            }
+            re.close();
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Error in method initialise -> relation");
+        }
 
-		f = new File(this.getClass().getClassLoader().getResource(this.FinalTagFilePathForSingle).getFile());
-		if (!f.exists()) {
-			System.out.println("为找到标注器初始化文件" + this.FinalTagFilePathForSingle);
-		} else {
-			try {
-				this._tagHashForSingle = new HashMap<>();
-				FileInputStream fis = new FileInputStream(f);
-				InputStreamReader re = new InputStreamReader(fis,
-						this.DefaultFileFormat);
-				BufferedReader reader = new BufferedReader(re);
-				String temp = null;
-				while ((temp = reader.readLine()) != null) {
-					char[] chararr = temp.toCharArray();
-					StringBuilder sb = new StringBuilder();
-					sb.append(chararr[0]);
-					sb.append(chararr[1]);
-					char[] pos_chararr = new char[5];
-					for (int j = 0, i = 4; j < 5; j++, i++) {
-						pos_chararr[j] = chararr[i];
-					}
-					Double pos = 0.1 * this.convertStringtoDouble(pos_chararr,
-							0);
-					pos = pos + chararr[2] - 48;
-					if (chararr[chararr.length - 2] == '-') {
-						int n = chararr[chararr.length - 1] - 48;
-						for (int i = 0; i < n; i++) {
-							pos *= 0.1;
-						}
-					}
-					this._tagHashForSingle.put(sb.toString(), pos);
-				}
-				fis.close();
-				re.close();
-				reader.close();
-			} catch (IOException e) {
-				System.err.println("Error in method initialise -> single");
-			}
-		}
+        try {
+            this._tagHashForSingle = new HashMap<>();
+            InputStream in = this.getClass().getClassLoader().getResourceAsStream(this.FinalTagFilePathForSingle);
+            InputStreamReader re = new InputStreamReader(in,
+                    this.DefaultFileFormat);
+            BufferedReader reader = new BufferedReader(re);
+            String temp = null;
+            while ((temp = reader.readLine()) != null) {
+                char[] chararr = temp.toCharArray();
+                StringBuilder sb = new StringBuilder();
+                sb.append(chararr[0]);
+                sb.append(chararr[1]);
+                char[] pos_chararr = new char[5];
+                for (int j = 0, i = 4; j < 5; j++, i++) {
+                    pos_chararr[j] = chararr[i];
+                }
+                Double pos = 0.1 * this.convertStringtoDouble(pos_chararr,
+                        0);
+                pos = pos + chararr[2] - 48;
+                if (chararr[chararr.length - 2] == '-') {
+                    int n = chararr[chararr.length - 1] - 48;
+                    for (int i = 0; i < n; i++) {
+                        pos *= 0.1;
+                    }
+                }
+                this._tagHashForSingle.put(sb.toString(), pos);
+            }
+            re.close();
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error in method initialise -> single");
+        }
 	}
 
 	protected double convertStringtoDouble(char[] chararr, int position) {

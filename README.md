@@ -49,11 +49,15 @@ This is the segmentation result
 * tm/ : training materials, corpus from Microsoft Research Asia.
 
 ### Execute Program
-Type content in command line
+Firstly build this project
 ```sh
-$ java com.mychaint.nlp.Program 
+$ mvn clean install
 ```
-Specify text file path
+Execute this program
 ```sh
-$ java com.mychaint.nlp.Program <file path>
+$ java -jar tokenizer-1.0-SNAPSHOT.jar
+```
+Specify text file as input
+```sh
+$ java -jar tokenizer-1.0-SNAPSHOT.jar <file path>
 ```

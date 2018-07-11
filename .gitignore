@@ -2,7 +2,7 @@
 .idea/
 /.settings/
 .project
-./target/
+target/
 *.iml
 .classpath
 *.txt

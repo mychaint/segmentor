@@ -1,15 +1,15 @@
 package com.mychaint.nlp;
 
 import java.io.*;
-import java.util.*;
+import java.util.List;
 
 public class Program {
 
 	public static void main(String[] args) throws IOException {
-		
+
 		CGSegmenter seg = new CGSegmenter(false);
 		InputStreamReader re = null;
-		
+
 		if (args.length > 0) {
 			String filePath = args[0];
 			File file = new File(filePath);
@@ -20,13 +20,13 @@ public class Program {
 				re = new InputStreamReader(fis);
 
 			}
-			
+
 		} else {
 			InputStream r = System.in;
 			re = new InputStreamReader(r);
-			
+
 		}
-		
+
 		BufferedReader reader = new BufferedReader(re);
 		String content = reader.readLine();
 		System.out.println("Result:");
